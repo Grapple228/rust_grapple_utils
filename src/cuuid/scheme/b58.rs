@@ -1,0 +1,88 @@
+use crate::b58::b58_decode;
+use crate::b58::b58_encode;
+
+use super::Result;
+use super::Scheme;
+
+pub struct SchemeB58;
+
+impl Scheme for SchemeB58 {
+    #[inline]
+    fn encode(&self, content: impl AsRef<[u8]>) -> String {
+        b58_encode(content)
+    }
+
+    #[inline]
+    fn try_decode(&self, content: &str) -> Result<Vec<u8>> {
+        Ok(b58_decode(content)?)
+    }
+}
+
+// region:    --- Tests
+
+#[cfg(test)]
+mod tests {
+    use crate::cuuid::Result;
+
+    use uuid::Uuid;
+
+    use crate::cuuid::CUuid;
+
+    const V4_ENCODED: &str = "4pBmkqufzAzQ7qWCzMFq21";
+    const V7_ENCODED: &str = "CPSnYpT5QSYA2h1RwKSc1";
+    const C: CUuid = CUuid::B58;
+
+    fn get_v7() -> Uuid {
+        Uuid::parse_str("01970370-2e2d-76e3-8c69-3bb5e943b2a2").unwrap()
+    }
+
+    fn get_v4() -> Uuid {
+        Uuid::parse_str("1ee202ed-9090-4331-af06-c2617155f04a").unwrap()
+    }
+
+    #[test]
+    fn test_uuid_v7_b58_encode() -> Result<()> {
+        let fx_id = get_v7();
+
+        let encoded = C.encode(fx_id);
+
+        assert_eq!(encoded, V7_ENCODED);
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_uuid_v7_b58_decode() -> Result<()> {
+        let fx_id = get_v7();
+
+        let decoded = C.decode(V7_ENCODED);
+
+        assert_eq!(decoded, fx_id);
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_uuid_v4_b58_encode() -> Result<()> {
+        let fx_id = get_v4();
+
+        let encoded = C.encode(fx_id);
+
+        assert_eq!(encoded, V4_ENCODED);
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_uuid_v4_b58_decode() -> Result<()> {
+        let fx_id = get_v4();
+
+        let decoded = C.decode(V4_ENCODED);
+
+        assert_eq!(decoded, fx_id);
+
+        Ok(())
+    }
+}
+
+// endregion: --- Tests

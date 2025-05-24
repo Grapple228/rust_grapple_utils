@@ -1,0 +1,32 @@
+[package]
+name = "grapple_utils"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+description = "A collection of utilities for Rust development."
+authors = ["grapple228"]
+readme = "README.md"
+repository = "https://github.com/grapple228/rust_grapple_utils.git"
+
+[features]
+default = ["envs"]
+
+b32 = ["dep:data-encoding"]
+b58 = ["dep:base58"]
+b64 = ["dep:data-encoding"]
+cuuid = ["dep:uuid", "dep:enum_dispatch"]
+envs = []
+time = ["dep:time"]
+
+
+[lints.rust]
+unsafe_code = "forbid"
+# unused = { level = "allow", priority = -1 } # For exploratory dev.
+
+[dependencies]
+derive_more = {version = "1", features = ["from"] }
+base58 = {version = "0.2", optional = true }
+uuid = { version = "1", features = ["fast-rng", "v4", "v7"], optional = true }
+time = {version = "0.3", features = ["formatting", "parsing", "serde"], optional = true }
+enum_dispatch = {version = "0.3", optional = true } 
+data-encoding = {version = "2", optional = true } 

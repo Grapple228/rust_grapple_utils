@@ -1,0 +1,8 @@
+# Environments variables set for all `cargo ...` commands.
+[env]
+RUST_LOG = "debug"
+STRING = "Just text"
+NUMBER = "23.5"
+B58 = "3aump9mdueoaV87JMp3adSVWqNmpr9B43pnL"
+B64 = "VGhpcyBpcyBub3QganVzdCBhIHN0cmluZyE"
+B32 = "AHK6ISP0D5PI0RJFEGG6KTBJEGG6283JEHP6IRJ744"
