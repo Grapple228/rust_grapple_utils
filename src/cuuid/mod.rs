@@ -1,5 +1,8 @@
 mod scheme;
 
+// Re-export uuid
+pub use uuid;
+
 use derive_more::derive::From;
 use scheme::{get_scheme, Scheme};
 use uuid::Uuid;

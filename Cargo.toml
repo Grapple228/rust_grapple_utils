@@ -1,12 +1,15 @@
 [package]
 name = "grapple_utils"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2021"
 license = "MIT"
 description = "A collection of utilities for Rust development."
 authors = ["grapple228"]
 readme = "README.md"
 repository = "https://github.com/grapple228/rust_grapple_utils.git"
+
+[package.metadata.docs.rs]
+all-features = true
 
 [features]
 default = ["envs"]
@@ -30,3 +33,4 @@ uuid = { version = "1", features = ["fast-rng", "v4", "v7"], optional = true }
 time = {version = "0.3", features = ["formatting", "parsing", "serde"], optional = true }
 enum_dispatch = {version = "0.3", optional = true } 
 data-encoding = {version = "2", optional = true } 
+paste = "1.0.15"

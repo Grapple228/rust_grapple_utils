@@ -1,20 +1,9 @@
 // This is config example, than uses the `env` feature.
 
-#[cfg(feature = "b32")]
-use grapple_utils::envs::get_env_b32_as_s;
-#[cfg(feature = "b32")]
-use grapple_utils::envs::get_env_b32_as_u8s;
-#[cfg(feature = "b58")]
-use grapple_utils::envs::get_env_b58_as_s;
-#[cfg(feature = "b58")]
-use grapple_utils::envs::get_env_b58_as_u8s;
-#[cfg(feature = "b64")]
-use grapple_utils::envs::get_env_b64u_as_s;
-#[cfg(feature = "b64")]
-use grapple_utils::envs::get_env_b64u_as_u8s;
+use std::collections::HashMap;
 
 #[cfg(feature = "envs")]
-use grapple_utils::envs::{get_env, get_env_parse};
+use grapple_utils::envs;
 
 #[cfg(feature = "envs")]
 pub fn config() -> &'static Config {
@@ -32,6 +21,7 @@ pub fn config() -> &'static Config {
 pub struct Config {
     pub STRING: String,
     pub NUMBER: f64,
+    pub KEYS: HashMap<String, String>,
     #[cfg(feature = "b64")]
     pub B64: Vec<u8>, // Useful for secret keys
     #[cfg(feature = "b64")]
@@ -50,20 +40,22 @@ impl Config {
     #[cfg(feature = "envs")]
     fn load_from_env() -> grapple_utils::envs::Result<Config> {
         Ok(Config {
-            STRING: get_env("STRING")?,
-            NUMBER: get_env_parse("NUMBER")?,
+            STRING: envs::get("STRING")?,
+            NUMBER: envs::get_parse("NUMBER")?,
+            KEYS: envs::get_keys("KEYS")?,
+
             #[cfg(feature = "b64")]
-            B64: get_env_b64u_as_u8s("B64")?,
+            B64: envs::get_b64u_as_u8s("B64")?,
             #[cfg(feature = "b58")]
-            B58: get_env_b58_as_u8s("B58")?,
+            B58: envs::get_b58_as_u8s("B58")?,
             #[cfg(feature = "b32")]
-            B32: get_env_b32_as_u8s("B32")?,
+            B32: envs::get_b32_as_u8s("B32")?,
             #[cfg(feature = "b64")]
-            B64D: get_env_b64u_as_s("B64")?,
+            B64D: envs::get_b64u_as_s("B64")?,
             #[cfg(feature = "b58")]
-            B58D: get_env_b58_as_s("B58")?,
+            B58D: envs::get_b58_as_s("B58")?,
             #[cfg(feature = "b32")]
-            B32D: get_env_b32_as_s("B32")?,
+            B32D: envs::get_b32_as_s("B32")?,
         })
     }
 }

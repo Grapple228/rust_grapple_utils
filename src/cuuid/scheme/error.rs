@@ -6,15 +6,11 @@ pub type Result<T> = core::result::Result<T, Error>;
 pub enum Error {
     SchemeNotFound(String),
 
-    #[from]
-    #[cfg(feature = "b32")]
-    B32(crate::b32::Error),
-    #[from]
     #[cfg(feature = "b58")]
-    B58(crate::b58::Error),
-    #[from]
-    #[cfg(feature = "b64")]
-    B64(crate::b64::Error),
+    Base58(crate::b58::Error),
+
+    #[cfg(any(feature = "b64", feature = "b32"))]
+    BaseX(crate::base_x::Error),
 }
 
 // region:    --- Error Boilerplate

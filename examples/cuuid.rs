@@ -6,7 +6,18 @@ fn main() {
     panic!("This example requires the 'cuuid' feature to be enabled.");
 }
 
-#[cfg(feature = "cuuid")]
+#[cfg(all(
+    feature = "cuuid",
+    not(any(feature = "b32", feature = "b58", feature = "b64"))
+))]
+fn main() {
+    panic!("This example requires one of the `b32`, `b58`, `b64` features to be enabled.");
+}
+
+#[cfg(all(
+    feature = "cuuid",
+    any(feature = "b32", feature = "b58", feature = "b64")
+))]
 fn display_id(cuuid: grapple_utils::cuuid::CUuid, id: uuid::Uuid) {
     let compressed = cuuid.from(id);
 
@@ -20,7 +31,10 @@ fn display_id(cuuid: grapple_utils::cuuid::CUuid, id: uuid::Uuid) {
     );
 }
 
-#[cfg(feature = "cuuid")]
+#[cfg(all(
+    feature = "cuuid",
+    any(feature = "b32", feature = "b58", feature = "b64")
+))]
 fn main() -> Result<()> {
     use grapple_utils::cuuid::CUuid;
 

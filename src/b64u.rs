@@ -1,7 +1,7 @@
-use crate::base_x::{self, Result};
-const ENCODING: data_encoding::Encoding = data_encoding::BASE32_NOPAD;
+use super::base_x::{self, Result};
+const ENCODING: data_encoding::Encoding = data_encoding::BASE64URL_NOPAD;
 
-/// Encodes data into a Base32 string without padding.
+/// Encodes data into a Base64 URL-safe string without padding.
 ///
 /// # Parameters
 /// - `content`: The data to be encoded. Can be any type that implements `AsRef<[u8]>`.
@@ -12,26 +12,26 @@ pub fn encode(content: impl AsRef<[u8]>) -> String {
     base_x::encode(content, ENCODING)
 }
 
-/// Decodes a Base32 string without padding into a vector of bytes.
+/// Decodes a Base64 URL-safe string without padding into a vector of bytes.
 ///
 /// # Parameters
-/// - `b32`: A string containing the encoded Base32 data without padding.
+/// - `b64u`: A string containing the encoded Base64 data.
 ///
 /// # Returns
 /// A result containing a vector of bytes if decoding is successful, or an error.
-pub fn decode(b32: &str) -> Result<Vec<u8>> {
-    base_x::decode(b32, ENCODING)
+pub fn decode(b64u: &str) -> Result<Vec<u8>> {
+    base_x::decode(b64u, ENCODING)
 }
 
-/// Decodes a Base32 string without padding into a string using the specified decoding method.
+/// Decodes a Base64 URL-safe string without padding into a string.
 ///
 /// # Parameters
-/// - `b32`: A string containing the encoded Base32 data without padding.
+/// - `b64u`: A string containing the encoded Base64 data.
 ///
 /// # Returns
 /// A result containing a string if decoding is successful and the data is valid UTF-8, or an error.
-pub fn decode_to_string(b32: &str) -> Result<String> {
-    base_x::decode_to_string(b32, ENCODING)
+pub fn decode_to_string(b64u: &str) -> Result<String> {
+    base_x::decode_to_string(b64u, ENCODING)
 }
 
 // region:    --- Tests
@@ -43,7 +43,7 @@ mod tests {
     use super::*;
 
     const TEXT: &str = "This is not just a string!";
-    const RESULT: &str = "KRUGS4ZANFZSA3TPOQQGU5LTOQQGCIDTORZGS3THEE";
+    const RESULT: &str = "VGhpcyBpcyBub3QganVzdCBhIHN0cmluZyE";
 
     #[test]
     fn test_decode() -> Result<()> {

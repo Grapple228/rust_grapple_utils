@@ -7,19 +7,19 @@ use base58::{FromBase58, ToBase58};
 ///
 /// # Returns
 /// A string representing the encoded data.
-pub fn b58_encode(content: impl AsRef<[u8]>) -> String {
+pub fn encode(content: impl AsRef<[u8]>) -> String {
     let bytes: &[u8] = content.as_ref();
     bytes.to_base58()
 }
 
-/// Decodes a Base64 string into a vector of bytes.
+/// Decodes a Base58 string into a vector of bytes.
 ///
 /// # Parameters
 /// - `b58`: A string containing the encoded Base58 data.
 ///
 /// # Returns
 /// A result containing a vector of bytes if decoding is successful, or an error.
-pub fn b58_decode(b58: &str) -> Result<Vec<u8>> {
+pub fn decode(b58: &str) -> Result<Vec<u8>> {
     b58.from_base58().map_err(|_| Error::FailToB58Decode)
 }
 
@@ -30,8 +30,8 @@ pub fn b58_decode(b58: &str) -> Result<Vec<u8>> {
 ///
 /// # Returns
 /// A result containing a string if decoding is successful and the data is valid UTF-8, or an error.
-pub fn b58_decode_to_string(b58: &str) -> Result<String> {
-    b58_decode(b58)
+pub fn decode_to_string(b58: &str) -> Result<String> {
+    decode(b58)
         .ok()
         .and_then(|r| String::from_utf8(r).ok())
         .ok_or(Error::FailToB58Decode)
@@ -67,28 +67,27 @@ mod tests {
     use super::*;
 
     const TEXT: &str = "This is not just a string!";
+    const RESULT: &str = "3aump9mdueoaV87JMp3adSVWqNmpr9B43pnL";
 
     #[test]
-    fn test_b58_decode() -> Result<()> {
-        let b58 = "3aump9mdueoaV87JMp3adSVWqNmpr9B43pnL";
-        let decoded = b58_decode(b58)?;
+    fn test_decode() -> Result<()> {
+        let decoded = decode(RESULT)?;
         assert_eq!(decoded, TEXT.as_bytes());
         Ok(())
     }
 
     #[test]
-    fn test_b58_decode_to_string() -> Result<()> {
-        let b58 = "3aump9mdueoaV87JMp3adSVWqNmpr9B43pnL";
-        let decoded = b58_decode_to_string(b58)?;
+    fn test_decode_to_string() -> Result<()> {
+        let decoded = decode_to_string(RESULT)?;
         assert_eq!(decoded, TEXT);
         Ok(())
     }
 
     #[test]
-    fn test_b58_encode() -> Result<()> {
-        let data = vec![0x12, 0x34, 0x56];
-        let encoded = b58_encode(&data);
-        assert_eq!(encoded, "77em");
+    fn test_encode() -> Result<()> {
+        let encoded = encode(&TEXT);
+        assert_eq!(encoded, RESULT);
+
         Ok(())
     }
 }

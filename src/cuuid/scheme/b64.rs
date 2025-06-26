@@ -1,20 +1,18 @@
-use crate::b64::b64u_decode;
-use crate::b64::b64u_encode;
-
 use super::Result;
 use super::Scheme;
+use crate::b64u;
 
 pub struct SchemeB64;
 
 impl Scheme for SchemeB64 {
     #[inline]
     fn encode(&self, content: impl AsRef<[u8]>) -> String {
-        b64u_encode(content)
+        b64u::encode(content)
     }
 
     #[inline]
     fn try_decode(&self, content: &str) -> Result<Vec<u8>> {
-        Ok(b64u_decode(content)?)
+        Ok(b64u::decode(content)?)
     }
 }
 
@@ -42,7 +40,7 @@ mod tests {
     }
 
     #[test]
-    fn test_uuid_v7_b64_encode() -> Result<()> {
+    fn test_uuid_v7_encode() -> Result<()> {
         let fx_id = get_v7();
 
         let encoded = C.encode(fx_id);
@@ -53,7 +51,7 @@ mod tests {
     }
 
     #[test]
-    fn test_uuid_v7_b64_decode() -> Result<()> {
+    fn test_uuid_v7_decode() -> Result<()> {
         let fx_id = get_v7();
 
         let decoded = C.decode(V7_ENCODED);
@@ -64,7 +62,7 @@ mod tests {
     }
 
     #[test]
-    fn test_uuid_v4_b64_encode() -> Result<()> {
+    fn test_uuid_v4_encode() -> Result<()> {
         let fx_id = get_v4();
 
         let encoded = C.encode(fx_id);
@@ -75,7 +73,7 @@ mod tests {
     }
 
     #[test]
-    fn test_uuid_v4_b64_decode() -> Result<()> {
+    fn test_uuid_v4_decode() -> Result<()> {
         let fx_id = get_v4();
 
         let decoded = C.decode(V4_ENCODED);

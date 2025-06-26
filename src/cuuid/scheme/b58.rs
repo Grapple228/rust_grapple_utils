@@ -1,5 +1,4 @@
-use crate::b58::b58_decode;
-use crate::b58::b58_encode;
+use crate::b58;
 
 use super::Result;
 use super::Scheme;
@@ -9,12 +8,12 @@ pub struct SchemeB58;
 impl Scheme for SchemeB58 {
     #[inline]
     fn encode(&self, content: impl AsRef<[u8]>) -> String {
-        b58_encode(content)
+        b58::encode(content)
     }
 
     #[inline]
     fn try_decode(&self, content: &str) -> Result<Vec<u8>> {
-        Ok(b58_decode(content)?)
+        Ok(b58::decode(content)?)
     }
 }
 
@@ -41,7 +40,7 @@ mod tests {
     }
 
     #[test]
-    fn test_uuid_v7_b58_encode() -> Result<()> {
+    fn test_uuid_v7_encode() -> Result<()> {
         let fx_id = get_v7();
 
         let encoded = C.encode(fx_id);
@@ -52,7 +51,7 @@ mod tests {
     }
 
     #[test]
-    fn test_uuid_v7_b58_decode() -> Result<()> {
+    fn test_uuid_v7_decode() -> Result<()> {
         let fx_id = get_v7();
 
         let decoded = C.decode(V7_ENCODED);
@@ -63,7 +62,7 @@ mod tests {
     }
 
     #[test]
-    fn test_uuid_v4_b58_encode() -> Result<()> {
+    fn test_uuid_v4_encode() -> Result<()> {
         let fx_id = get_v4();
 
         let encoded = C.encode(fx_id);
@@ -74,7 +73,7 @@ mod tests {
     }
 
     #[test]
-    fn test_uuid_v4_b58_decode() -> Result<()> {
+    fn test_uuid_v4_decode() -> Result<()> {
         let fx_id = get_v4();
 
         let decoded = C.decode(V4_ENCODED);

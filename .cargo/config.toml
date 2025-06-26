@@ -1,8 +1,8 @@
 # Environments variables set for all `cargo ...` commands.
 [env]
-RUST_LOG = "debug"
 STRING = "Just text"
 NUMBER = "23.5"
-B58 = "3aump9mdueoaV87JMp3adSVWqNmpr9B43pnL"
-B64 = "VGhpcyBpcyBub3QganVzdCBhIHN0cmluZyE"
-B32 = "AHK6ISP0D5PI0RJFEGG6KTBJEGG6283JEHP6IRJ744"
+B32 = "JJ2XG5BAORSXQ5A" # "Just text" in Base32 format
+B58 = "wyGxDNYnFuVm" # "Just text" in Base58 format
+B64 = "SnVzdCB0ZXh0" # "Just text" in Base64u format
+KEYS = "pwd:ZyNaprlTBPu1Fe07KyNEgGawsgtjswOPCp8ERskS9aUBe_RmSwL3y-eUrx6m8eT8wkCRAnCcdz0N7ZeaIsJqfw, client_secret:OwGlfd6U4PDtZHPyICjq4ID-B7TGGzcElUicgVb21u_IedwmmyjxKCkbQhF0g--6gn-0y8dUVW9ROFwSX9UQ1Q"
