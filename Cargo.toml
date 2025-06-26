@@ -5,7 +5,7 @@ edition = "2021"
 license = "MIT"
 description = "A collection of utilities for Rust development."
 authors = ["grapple228"]
-readme = "README.md"
+readme = "readme.md"
 repository = "https://github.com/grapple228/rust_grapple_utils.git"
 
 [package.metadata.docs.rs]
