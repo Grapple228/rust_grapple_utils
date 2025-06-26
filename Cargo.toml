@@ -18,7 +18,7 @@ b32 = ["dep:data-encoding"]
 b58 = ["dep:base58"]
 b64 = ["dep:data-encoding"]
 cuuid = ["dep:uuid", "dep:enum_dispatch"]
-envs = []
+envs = ["dep:paste"]
 time = ["dep:time"]
 
 
@@ -33,4 +33,4 @@ uuid = { version = "1", features = ["fast-rng", "v4", "v7"], optional = true }
 time = {version = "0.3", features = ["formatting", "parsing", "serde"], optional = true }
 enum_dispatch = {version = "0.3", optional = true } 
 data-encoding = {version = "2", optional = true } 
-paste = "1.0.15"
+paste = {version = "1", optional = true } 
